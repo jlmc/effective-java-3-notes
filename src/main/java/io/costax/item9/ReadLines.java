@@ -5,7 +5,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 public class ReadLines {
@@ -42,7 +41,7 @@ public class ReadLines {
 
     }
 
-    static void copy (String src, String dst) throws IOException {
+    static void copy(String src, String dst) throws IOException {
         /*
         // BAD code
         InputStream in = new FileInputStream(src);
@@ -78,8 +77,6 @@ public class ReadLines {
             }
         }
     }
-
-
 
     public static void main(String[] args) throws IOException {
         final String path = "files/lines.txt";

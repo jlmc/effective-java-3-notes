@@ -14,25 +14,7 @@ public class CaseInsensiveString {
         return new CaseInsensiveString(a);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-
-        if ( o instanceof CaseInsensiveString) {
-            return s.equalsIgnoreCase(((CaseInsensiveString) o).s);
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(s.toLowerCase());
-    }
-
     public static void main(String[] args) {
-
 
         List<CaseInsensiveString> works = new ArrayList<>(0);
         works.add(CaseInsensiveString.of("a"));
@@ -43,8 +25,7 @@ public class CaseInsensiveString {
         System.out.println(works.contains(CaseInsensiveString.of("A"))); // true
         System.out.println(works.size()); // 3
 
-
-        // esta colelcção Set fará uso do method hashset
+        // esta collection Set fará uso do method hashset
         Set<CaseInsensiveString> singles = new HashSet<>(0);
         singles.add(CaseInsensiveString.of("a"));
         singles.add(CaseInsensiveString.of("A"));
@@ -55,5 +36,22 @@ public class CaseInsensiveString {
         System.out.println(singles.contains(CaseInsensiveString.of("A"))); // true
         System.out.println(singles.contains(CaseInsensiveString.of("B"))); // true
         System.out.println(singles.size()); // 2
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+
+        if (o instanceof CaseInsensiveString) {
+            return s.equalsIgnoreCase(((CaseInsensiveString) o).s);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(s.toLowerCase());
     }
 }

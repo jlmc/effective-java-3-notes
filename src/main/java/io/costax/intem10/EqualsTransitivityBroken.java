@@ -8,7 +8,7 @@ public class EqualsTransitivityBroken {
 
 }
 
-class ColorPoint  {
+class ColorPoint {
     private final Color color;
     private Point point;
 
@@ -37,7 +37,7 @@ class Point {
     private final int x;
     private final int y;
 
-    Point (int x, int y) {
+    Point(int x, int y) {
 
         this.x = x;
         this.y = y;

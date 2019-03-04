@@ -12,7 +12,7 @@ public class PrimitevesVsAutoboxing {
     public static void main(String[] args) {
         final Instant startup = Instant.now();
 
-       long sum = getSumLongWithoutAutoBoxing();  // The duration is: PT0.614S
+        long sum = getSumLongWithoutAutoBoxing();  // The duration is: PT0.614S
         //Long sum = getSumLongWithAutoBoxing();  // The duration is: PT7.866S
 
         final Duration between = Duration.between(startup, Instant.now());

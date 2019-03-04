@@ -1,6 +1,4 @@
-
-
 /**
- * Avoid  finalizers and cleaners
+ * Avoid finalizers and cleaners
  */
 package io.costax.item8;

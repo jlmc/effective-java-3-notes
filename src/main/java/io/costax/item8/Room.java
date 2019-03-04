@@ -1,8 +1,13 @@
 package io.costax.item8;
 
-import sun.misc.Cleaner;
 
+// TODO
 public class Room implements AutoCloseable {
+    @Override
+    public void close() throws Exception {
+
+    }
+    /*
 
     private static Cleaner cleaner;
 
@@ -42,4 +47,5 @@ public class Room implements AutoCloseable {
             e.printStackTrace();
         }
     }
+    */
 }

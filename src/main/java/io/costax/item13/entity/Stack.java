@@ -4,20 +4,20 @@ import java.util.Arrays;
 import java.util.EmptyStackException;
 
 public class Stack implements Cloneable {
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
     private Object[] elements;
     private int size = 0;
-    private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
     public Stack() {
         this.elements = new Object[DEFAULT_INITIAL_CAPACITY];
     }
 
-    public void push (Object e) {
+    public void push(Object e) {
         ensureCapacity();
         elements[size++] = e;
     }
 
-    public Object pop () {
+    public Object pop() {
         if (size == 0) {
             throw new EmptyStackException();
         }
@@ -38,7 +38,7 @@ public class Stack implements Cloneable {
      * Stack itself is copied, but the elements values are not cloned.
      * This is a relatively expensive operation.
      *
-     * @return  a clone of the Stack
+     * @return a clone of the Stack
      */
     @Override
     public Stack clone() {

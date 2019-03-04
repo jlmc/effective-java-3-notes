@@ -1,20 +1,18 @@
 package io.costax.item13.entity;
 
-import java.util.Objects;
-
 public class PhoneNumber implements Cloneable {
 
-    private  short areaCode;
-    private  short prefix;
-    private  short lineNum;
+    private short areaCode;
+    private short prefix;
+    private short lineNum;
 
-    private PhoneNumber (short areaCode, short prefix, short lineNum) {
+    private PhoneNumber(short areaCode, short prefix, short lineNum) {
         this.areaCode = areaCode;
         this.prefix = prefix;
         this.lineNum = lineNum;
     }
 
-    public static PhoneNumber from (short areaCode, short prefix, short lineNum) {
+    public static PhoneNumber from(short areaCode, short prefix, short lineNum) {
         return new PhoneNumber(areaCode, prefix, lineNum);
     }
 
@@ -43,14 +41,14 @@ public class PhoneNumber implements Cloneable {
     }
     */
 
-    @Override public PhoneNumber clone() {
+    @Override
+    public PhoneNumber clone() {
         try {
             return (PhoneNumber) super.clone();
-        } catch(CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             throw new AssertionError(); // Can't happen
         }
     }
-
 
 
 }

@@ -2,7 +2,7 @@ package io.costax.item13.entity;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class StackTest {
 
@@ -14,7 +14,6 @@ public class StackTest {
         x.push(pn);
 
         final Stack clone = x.clone();
-
 
         assertTrue(clone != x);
         assertTrue(x.getClass() == clone.getClass());

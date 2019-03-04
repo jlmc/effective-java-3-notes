@@ -17,7 +17,7 @@ public class Car extends Vehicle implements Cloneable {
     public Car clone() {
         try {
             final Car clone = (Car) super.clone();
-            clone.owner = (Owner) owner.clone();
+            clone.owner = owner.clone();
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);

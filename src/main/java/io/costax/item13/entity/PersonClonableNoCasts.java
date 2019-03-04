@@ -23,7 +23,7 @@ public class PersonClonableNoCasts implements Cloneable {
         try {
             return (PersonClonableNoCasts) super.clone();
         } catch (CloneNotSupportedException e) {
-           throw new AssertionError("can't happen");
+            throw new AssertionError("can't happen");
         }
     }
 

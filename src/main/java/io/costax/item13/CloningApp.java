@@ -9,7 +9,7 @@ public class CloningApp {
         cloneWithArray();
     }
 
-    public static void cloneWithArray () {
+    public static void cloneWithArray() {
         final Stack x = new Stack();
         final PhoneNumber pn = PhoneNumber.from((short) 1, (short) 2, (short) 3);
         x.push(pn);
@@ -25,10 +25,9 @@ public class CloningApp {
         System.out.println(pop == pn);
     }
 
+    public static void simpleClone() {
 
-    public static void simpleClone()  {
-
-        final PhoneNumber x = PhoneNumber.from((short)1, (short)2, (short)3);
+        final PhoneNumber x = PhoneNumber.from((short) 1, (short) 2, (short) 3);
         final Object clone = x.clone();
 
         System.out.println(clone != x); // true

@@ -9,7 +9,7 @@ public class PersonClonable implements Cloneable {
     }
 
     public PersonClonable() {
-        System.out.println("Person -- default constructor" );
+        System.out.println("Person -- default constructor");
     }
 
     public static PersonClonable of(String name) {

@@ -6,20 +6,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- *  x.clone() != x ==> TRUE
+ * x.clone() != x ==> TRUE
+ * <p>
+ * x.clone().getClass() ==> x.getClass() ==> TRUE
+ * <p>
+ * x.clone().equals(x) ==> True (good), but not absolute required
  *
- *  x.clone().getClass() ==> x.getClass() ==> TRUE
  *
- *  x.clone().equals(x) ==> True (good), but not absolute required
+ * <p>
+ * Immutable classes should no be cloneable, they should never provide a clone method
+ * </p>
  *
- *
- *  <p>
- *      Immutable classes should no be cloneable, they should never provide a clone method
- *  </p>
- *
- *  <p>
- *      Singletons should not be cloneable.
- *  </p>
+ * <p>
+ * Singletons should not be cloneable.
+ * </p>
  */
 public class CloningTest {
 
@@ -46,7 +46,7 @@ public class CloningTest {
     public void shouldClone() {
         final PersonClonableNoCasts x = PersonClonableNoCasts.of("abcd");
 
-        final PersonClonableNoCasts clone =  x.clone();
+        final PersonClonableNoCasts clone = x.clone();
 
         Assert.assertTrue(x != clone);
         Assert.assertTrue(x.getClass() == clone.getClass());

@@ -9,7 +9,7 @@ public class PersonNoClonable {
     }
 
     public PersonNoClonable() {
-        System.out.println("Person -- default constructor" );
+        System.out.println("Person -- default constructor");
     }
 
     public static PersonNoClonable of(String name) {
