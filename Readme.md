@@ -10,6 +10,8 @@ This project contains the code resulting from my reading of the book Effective J
 + Default methods in interfaces
 + try-with-resources
 
+### Chapter 2. Creating and Destroying Objects
+
 + Factory methods (1)
 + try-with-resources (9)
 + equals (10)
@@ -18,6 +20,15 @@ This project contains the code resulting from my reading of the book Effective J
 + Comparable (14)
 + minimize mutability (17)
 + Enums (34)
+
+
+### Chapter 7. Lambdas and Streams
+
++ prefer lambdas to anonymous classes (42)
++ prefer methods references to lambdas (43)
++ favor standard functional interfaces (44)
++ use streams judiciously (45)
++ use caution when making streams parallel (48)
 
 
 
@@ -83,7 +94,9 @@ Advantage:
 
 - We should use the functional Interfaces provided by the JDK instead of creating our own functional interfaces, because JDK in most cases already provides us good match. If we create new FunctionalInterfaces the other developers will have to undertands them as well, so, extra work.
 
-- As mais usadas e mais conhecidas functional interfaces da JDK são:
+- Java has 43 standard functions (functional functions), it should be enough to find a good math that meets our needs.
+
+- The most commonly used and best known functional interfaces of JDK are:
     
  - `UnaryOperator<T>` : extends Function where the input type is the same of the return type
  - `BinaryOperator<T>` : extends Function with 2 parameters of T same type and return type T
@@ -93,6 +106,19 @@ Advantage:
  - `Supplier<T>` : Take no arguments and return a object o type T, basically is factory 
  - `Consumer<T>` : Take a object of type T and return void, do some job with the parameter
 
+| Interface          | Function Signature         | Example               |
+| ------------------ |:-------------------------- |:----------------------|
+| UnaryOperator<T>   | `T apply(T t)`             | `String::toLowercase` |
+| BinaryOperator<T>  | `T apply(T t1, T t2)`      | `BigInteger::add`     |
+| Predicate<T>       | `boolean test(T t)`        | `Collection::isEmpty` |
+| Function<T,R>      | `R apply(T t)`             | `Arrays::asList`      |
+| Supplier<T>        | `T get()`                  | `Instant::now`        |
+| Consumer<T>        | v`oid  accept(T t)`        | `System.out::println` |
+
+- Must of the remaining 37 interfaces do the same thing but they do them to the primitive types or at lest two to three of the primitive type instant Long's and doubles. 
+
+   - You could not bother using them, you could like always use the object reference variance but doing that you will be doing lots of auto-boxing and auto auto-unboxing.
+   - auto-boxing and auto auto-unboxing is very bad idea, if we do that, we're injecting performance issues into our code.  
 
 
 ## Optional
@@ -103,6 +129,174 @@ Advantage:
 
 - should be used in controlled scopes. 
 - should not be used as identifiers of return values of methods.
+
+## prefer lambdas to anonymous classes (42)
+
+- Lambdas lack names and documentation
+ 
+  - **They should be self-explanatory**
+  - **they should not exceed a few lines; one is best**
+
+- If lambda would be long or complex:
+
+  - Extract it to method and use method reference 
+  - Or (for enums) use instance-specific class body
+  
+- Anonymous classes still have a few uses
+ 
+  - Lambdas require functional interfaces
+  - Lambdas cannot access themselves; in a lambda, this keyword refers to the enclosing instance
+  
+## prefer methods references to lambdas (43)
+
+- Lambdas are succinct 
+
+    ```
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 1);
+        map.put("b", 2);
+        map.put("c", 3);
+        
+        // lambdas are succinct
+        map.merge("a", 4, (count, incr) -> count + incr);
+    
+        // but method reference can be more so
+        map.merge("a", 4, Integer::sum);
+    ```
+    
+- The more parameters, the bigger the win it is for the method reference
+
+ - but parameters names may provide documentation, the params names can tell you something about what you are doing with them.
+ - if you use lambda, choose param name carefully
+ 
+ - Occasionally, lambdas are more succinct, occasionally lambdas are better than method references eg:
+
+    ```
+    service.execute(() -> action());
+    ``` 
+
+    is preferable to 
+
+    ```
+    service.execute(GoshThisClassNameIsHumongours::action);
+    ```
+    
+- Lambdas can beat functions factories too
+
+    ```
+    .flatMap(x -> x);
+    ```
+    is preferable to 
+    ```
+    .flatMap(Function.identity());
+    ```
+
+- All the five types of method reference are preferable to lambdas
+
+| Type               | Example                  | Lambda Equivalent              |
+| ------------------ |:------------------------ |:-------------------------------|
+| Static             | `Integer::parseInt`      | `str -> Integer.parseInt(str)` |
+| Bound              | `Instant.now()::isAfter` | `t -> Instant.now().isAfter(t)`|
+| Unbound            | `String::toLowerCase`    | `str -> str.toLowerCase()`     |
+| Class Constructor  | `TreeMap<K,V>::new`      | `() -> new TreeMap<k, V>() `   |
+| Array Constructor  | `int[]::new`             | `len -> new int[len]`          |
+
+
+Bound references methods are great, basically you specify an object a object reference at time that you create the lambda and then the parameters on the named method on that object are the parameters.
+
+
+## favor standard functional interfaces (44)    
+
+ - Before lambdas, Template Methods pattern was common
+ 
+ ```
+ public class Cache<K, V> extends LinkedHashmap<K, V> {
+    
+    final int maxSize; // set by constructor-omitted for brevity
+    
+    protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+        return size() > maxSize;
+    }
+ }
+ ```
+ 
+ - Now, Strategy pattern is generally preferable
+ 
+ ```
+ public LinkedHashMap(EldestEntryRemovalFunction<K,V> fn) { ... }
+ 
+ // Unnecessary functional interface; use standard one instead!!!!
+ @FunctionalInterface interface EldestEntryRemovalFunction<K,V> {
+    boolean remove(Map<K,V> eldest);
+ }
+ 
+ Map<K,V> cache = new LinkedHashMap((map, eldestEntrey) -> map.size() > maxSize);
+ ```
+
+ - We should be using the standard `BiPredicate<Map<K,V>, Map.Entry<K, V>>` instead of EldestEntryRemovalFunction<K,V>.
+ 
+ - **when shouldn't we use a standard  functional interface?** 
+ 
+   - When none of the standard interfaces apply.
+   - But remember that: Interfaces are forever; interfaces should be design very very carefully; 
+ 
+ 
+# use streams judiciously (45)
+
+- what is a Stream ? 
+ - A stream is **a bunch of data objects from one stream generator** (data source it could be a collection, array, input device, etc...), 
+ - **for bulk data processing** 
+ - I**t is processed by a pipeline**
+ - **Zero or more intermediate stream operations** 
+ - **One Single Terminal stream operation** that takes all the elements of the stream and does something.
+
+   
+ - Good programs tend to combine iterations and streaming's
+ - Stream don't direct support for char, if we try to sort of force the square peg into the round the hole the resulting implementation would have been difficult to read difficult to write and probably slower.
+ 
+ ```
+     @Test
+     public void whatIsTheOutput() {
+         "Hello world!!!".chars()
+                 .forEach(System.out::print);
+ 
+         // Output: 7210110810811132119111114108100333333
+     }
+ 
+     @Test
+     public void whatIsTheOutputNow() {
+         // LOL: The chars() methods returns a IntStream
+         "Hello world!!!".chars()
+                 .forEach(x -> System.out.print((char) x));
+ 
+         // output: Hello world!!!
+     }
+ ```
+ 
+ Moral:
+  
+  + Stream only for objects ref types, int, long, and double 
+  + minor primitive types ate missing
+  + types inference can be confusing
+  + Avoid using streams for char processing 
+  
+  
+## use caution when making streams parallel (48) 
+
+ - do not parallelize infinity stream, the computer don't not have the minimal idea who to parallelize that.
+ - what can we parallelize well?
+   - Arrays, ArraysList, HashMap, HashSet, ConcurrentHashMap, int and long ranges...
+   - What do there sources have in common? 
+     - predictably splittable
+     - Good locality of reference
+   - Terminal Operation also matters 
+     - must be quick, or easily parallelizable
+     - Best are reductions, e.g. min, max, count, count, sum 
+     - Collectors (AKA mutable reductions) not so good  
+   - Intermediate operations also matter
+     - Mapping and filtering are good matchers 
+     - limit is a very bad matcher  
+ 
 
 ## Notes:
 
