@@ -30,7 +30,9 @@ This project contains the code resulting from my reading of the book Effective J
 + use streams judiciously (45)
 + use caution when making streams parallel (48)
 
+### Chapter 8. Methods
 
++ Use Varargs Judiciously (53)
 
 ## Factory methods (1)
 
@@ -297,6 +299,52 @@ Bound references methods are great, basically you specify an object a object ref
      - Mapping and filtering are good matchers 
      - limit is a very bad matcher  
  
+
+
+## Use overloading judiciously (52)
+
+- Avoid confusing uses of overloading
+- The behavior of this program is counterintuitive because selection among overloaded methods is static, while selection among overridden methods is dynamic.
+- A safe, conservative policy is never to export two overloadings with the same number of parameters.
+- you can always give methods different names instead of overloading them.
+
+  - ObjectOutputStream class. It has a variant of its write method for every primitive type and for several reference types.
+  Rather than overloading the write method, these variants all have different names, such as writeBoolean(boolean), writeInt(int), and writeLong(long). An added benefit of this naming pattern, when compared to overloading, is that it is possible to provide read methods with corresponding names, for example, readBoolean(), readInt(), and readLong()
+
+## Use Varargs Judiciously (53)
+
+- The right way to implements a method with at least um argument is to declare the methods was the following:
+
+    ```
+        private static int min(int firstArg, int... remainingArgs) {
+            int min = firstArg;
+            for (int arg : remainingArgs) {
+                if (arg < min) {
+                    min = arg;
+                }
+            }
+            return min;
+        }
+    ```
+- premature optimization is the root of all evil!!!
+
+- The probleam with varargs is varargs automatically creates an array, this costs time and garbage collector pressure to create all those arrays, some times we can't afford that in that case we declare the methods as the following:
+
+```
+class EnumSet<E extends Enum<E> {
+    static <E> enumSet<E> of(E e);
+    static <E> enumSet<E> of(E e1, E e2);
+    static <E> enumSet<E> of(E e1, E e2, E e3);
+    static <E> enumSet<E> of(E e1, E e2, E e3, E e4);
+    static <E> enumSet<E> of(E e1, E e2, E e3, E e4, E e5);
+    static <E> enumSet<E> of(E first, E... rest);
+} 
+```
+
+- instead of having only one thing we know to take the case with one argument you have one two three four five and finally if and only if more than five default to the version with varargs.   
+- Avoid cost of array allocation if fewer that n args
+    
+    
 
 ## Notes:
 
