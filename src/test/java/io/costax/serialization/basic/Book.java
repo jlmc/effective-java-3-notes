@@ -1,4 +1,4 @@
-package io.costax.seralization.basic;
+package io.costax.serialization.basic;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
