@@ -15,6 +15,8 @@ public class SimpleSerialization {
 
         serialize(FILE_BOOK_SER, book);
 
+        System.out.println("**** < Deserialization ***");
+
         final Book deserializeBook = deserialize(Book.class, FILE_BOOK_SER);
 
         Assert.assertNotNull(deserializeBook);
