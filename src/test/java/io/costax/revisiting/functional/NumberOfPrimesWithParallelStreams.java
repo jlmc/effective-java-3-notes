@@ -1,16 +1,12 @@
 package io.costax.revisiting.functional;
 
+import io.costax.TimerMarker;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 import java.math.BigInteger;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.stream.LongStream;
 
 public class NumberOfPrimesWithParallelStreams {
@@ -18,7 +14,7 @@ public class NumberOfPrimesWithParallelStreams {
     private static final long N = 9999999L;
 
     @Rule
-    public TimerMarker marker = new TimerMarker();
+    public TimerMarker marker = TimerMarker.timer();
 
     @Test
     public void p1Sequential() {
@@ -53,26 +49,5 @@ public class NumberOfPrimesWithParallelStreams {
                 .mapToObj(BigInteger::valueOf)
                 .filter(i -> i.isProbablePrime(50))
                 .count();
-    }
-
-    public static class TimerMarker implements TestRule {
-
-        @Override
-        public Statement apply(final Statement base, final Description description) {
-            return new Statement() {
-                @Override
-                public void evaluate() throws Throwable {
-                    final String methodName = description.getMethodName();
-
-                    final Instant timeBefore = Instant.now();
-
-                    base.evaluate();
-
-                    final Instant timeAfter = Instant.now();
-                    final Duration between = Duration.between(timeBefore, timeAfter);
-                    System.out.println(methodName + ": " + between);
-                }
-            };
-        }
     }
 }
