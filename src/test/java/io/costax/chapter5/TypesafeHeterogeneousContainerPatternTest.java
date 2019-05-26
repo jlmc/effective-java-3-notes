@@ -1,10 +1,12 @@
 package io.costax.chapter5;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TypesafeHeterogeneousContainerPatternTest {
 
@@ -23,7 +25,7 @@ public class TypesafeHeterogeneousContainerPatternTest {
         final Class favoriteClass = f.getFavorite(Class.class);
 
         System.out.printf("%s %x %s\n", fString, fInteger, favoriteClass);
-        Assert.assertEquals("java", fString);
+        assertEquals("java", fString);
     }
 
     private static class Favorites {
