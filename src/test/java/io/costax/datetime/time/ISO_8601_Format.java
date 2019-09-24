@@ -1,4 +1,4 @@
-package io.costax.time;
+package io.costax.datetime.time;
 
 import org.junit.jupiter.api.Test;
 
@@ -126,7 +126,7 @@ public class ISO_8601_Format {
     }
 
     @Test
-    void name() {
+    void dateTimeFormatting() {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 // date/time
                 .append(DateTimeFormatter.ISO_LOCAL_DATE_TIME)

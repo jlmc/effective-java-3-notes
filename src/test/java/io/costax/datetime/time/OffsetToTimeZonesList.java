@@ -1,5 +1,6 @@
-package io.costax.time;
+package io.costax.datetime.time;
 
+import io.costax.datetime.Setup;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.costax.time.Setup.clock;
+import static io.costax.datetime.Setup.clock;
 
 /**
  * Question: Given the offset {@code +02:00}, how do you know the timezone?

@@ -3,7 +3,7 @@ package io.costax.overviewmovingtojdk12.stackwalker;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 class StackWalkerTest {
@@ -27,7 +27,35 @@ class StackWalkerTest {
     }
 
     @Test
-    void with_jdk() {
-        final Collector<Object, ?, List<Object>> walk = StackWalker.getInstance().walk(s -> Collectors.toList());
+    void with_jdk11() {
+
+        final List<Class<?>> interestingClasses = List.of(String.class, StackWalkerTest.class);
+
+        // 1. To find the first caller filtering a known list of implementation class:
+        final StackWalker stackWalker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+        final Optional<? extends Class<?>> walk = stackWalker.walk(s ->
+
+                s.map(StackWalker.StackFrame::getDeclaringClass)
+                        .filter(clazz -> interestingClasses.contains(clazz))
+                        .findFirst()
+        );
+
+        System.out.println(walk.map(s -> s.getName()).orElseGet(() -> "-- nothing --"));
+
+        System.out.println("+++++++++");
+
+        //2. To snapshot the top 10 stack frames of the current thread,
+        List<StackWalker.StackFrame> stack = StackWalker.getInstance()
+                .walk(s -> s.limit(10)
+                        .collect(Collectors.toList()));
+
+        stack.forEach(System.out::println);
+
+
+        //final Collector<Object, ?, List<Object>> walk = StackWalker.getInstance().walk(s -> Collectors.toList());
+
+
+
+
     }
 }

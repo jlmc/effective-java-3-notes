@@ -1,4 +1,4 @@
-package io.costax.time;
+package io.costax.datetime;
 
 import java.time.Clock;
 import java.time.Month;
