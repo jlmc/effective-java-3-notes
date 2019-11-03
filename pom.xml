@@ -48,6 +48,16 @@
             <version>2.3.0</version>
         </dependency>
 
+        <!--
+        JSR 354 RI -  https://www.jcp.org/en/jsr/detail?id=354
+           The reference implementation - http://javamoney.github.io/ri.html
+        -->
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <version>1.3</version>
+            <type>pom</type>
+        </dependency>
 
         <!--
         <dependency>
@@ -72,7 +82,6 @@
             <version>${junit5.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
