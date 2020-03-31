@@ -126,13 +126,13 @@ class SimpleDateFormatTest {
         final String format = formatter.format(someDate);
         Assertions.assertEquals("09/10/2019", formatter.format(someDate));
 
-        final SimpleDateFormat formatter2 = new SimpleDateFormat("EEEE dd-MMM-yyyy", LOCALE_PORTUGAL);
+        final SimpleDateFormat formatter2 = new SimpleDateFormat("EEEE dd-MMMMM-yyyy", LOCALE_PORTUGAL);
         formatter2.setTimeZone(TimeZone.getTimeZone(ZoneId.of(EUROPE_LISBON)));
         Assertions.assertEquals("quarta-feira 09-outubro-2019", formatter2.format(someDate));
 
         final SimpleDateFormat formatter3 = new SimpleDateFormat("EEE dd-MMM-yyyy", LOCALE_PORTUGAL);
         formatter3.setTimeZone(TimeZone.getTimeZone(ZoneId.of(EUROPE_LISBON)));
-        Assertions.assertEquals("quarta 09-outubro-2019", formatter3.format(someDate));
+        Assertions.assertEquals("quarta 09-out.-2019", formatter3.format(someDate));
     }
 
     @Test
