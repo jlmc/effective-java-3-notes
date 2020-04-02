@@ -54,3 +54,22 @@ The solution is the pattern: THC - Typesafe Heterogeneous Container pattern
  - this way data is strongly typed at compile time
  - this way allows for unlimited type parameter
 
+
+
+## Java Generics PECS – Producer Extends Consumer Super
+
+[PECS Test ](../src/test/java/io/costax/chapter5/PECSTest.java)
+
+##### Summary
+
+Based on above reasoning and examples, let’s summarize our learning in bullet points.
+
+1. Use the <? extends T> wildcard if you need to retrieve (GET) object of type T from a collection.
+
+2. Use the <? super T> wildcard if you need to put (ADD) objects of type T in a collection.
+
+3. If you need to satisfy both things, well, don’t use any wildcard. As simple as it is.
+
+4. In short, remember the term PECS. Producer extends Consumer super. Really easy to remember.
+
+That’s all for simple yet complex concept in generics in java. Let me know of your thoughts via comments.
